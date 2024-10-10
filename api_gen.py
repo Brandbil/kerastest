@@ -19,7 +19,7 @@ BUILD_DIR_NAME = "tmp_build_dir"
 
 def ignore_files(_, filenames):
     return [f for f in filenames if f.endswith("_test.py")]
-
+ 
 
 def copy_source_to_build_directory(root_path):
     # Copy sources (`keras/` directory and setup files) to build dir
