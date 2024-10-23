@@ -6,3 +6,6 @@ test-command = "pytest"
 
 [cosmic-ray.distributor]
 name = "local"
+
+[execution]
+max_mutations_per_test = 1  # Example limit
