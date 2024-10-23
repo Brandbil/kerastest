@@ -50,7 +50,16 @@ jobs:
           pip install -r requirements.txt --progress-bar off --upgrade
           pip uninstall -y keras keras-nightly
           pip install tf_keras==2.16.0 --progress-bar off --upgrade
+          pip install cosmic-ray --progress-bar off --upgrade
           pip install -e "." --progress-bar off --upgrade
+      - name: Run mutation tests with Cosmic Ray
+        run: |
+          cd keras/src
+          cosmic-ray exec test_config.toml test_config.session
+      - name: Generate mutation test report
+        run: |
+          cd keras/src
+          cr-report tutorial.sqlite --show-pending
       - name: Test applications with pytest
         if: ${{ steps.filter.outputs.applications == 'true' }}
         run: |
