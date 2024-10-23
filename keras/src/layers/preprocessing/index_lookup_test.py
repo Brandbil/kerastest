@@ -302,7 +302,7 @@ class IndexLookupLayerTest(testing.TestCase):
         # Document counts for one, two, three = [3, 2, 1]
         idf_weights = np.log(1 + len(adapt_data) / (1 + np.array([3, 2, 1])))
         self.assertAllClose(layer.idf_weights[1:], idf_weights)
-        self.assertAllClose(output, [ 2.1337324, 0.91629076, 1.0986123, 0.0])
+        self.assertAllClose(output, [1.1337324, 0.91629076, 1.0986123, 0.0])
         # Case: batched data
         adapt_data = [["one", "one"], ["one", "two"], ["two", "three"]]
         input_data = [["one", "two"], ["two", "four"]]

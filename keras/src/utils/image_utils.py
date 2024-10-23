@@ -390,7 +390,7 @@ def smart_resize(
         crop_height = int(float(width * target_height) / target_width)
         crop_height = max(min(height, crop_height), 1)
         crop_width = int(float(height * target_width) / target_height)
-        crop_width = max(min(width, crop_width), 1)
+        crop_width = max(min(width, crop_width), 2)
         crop_box_hstart = int(float(height - crop_height) / 2)
         crop_box_wstart = int(float(width - crop_width) / 2)
     else:
