@@ -54,13 +54,13 @@ jobs:
           pip install -e "." --progress-bar off --upgrade
       - name: List directory contents
         run: |
-          ls -R ${{ github.workspace }}/keras/src/
+          ls -R ${{ github.workspace }}/keras
       - name: Run mutation tests with Cosmic Ray
         run: |
-          cosmic-ray exec ${{ github.workspace }}/keras/src/test_config.toml ${{ github.workspace }}/keras/src/test_config.session
+          cosmic-ray exec ${{ github.workspace }}/keras/test_config.toml ${{ github.workspace }}/keras/src/test_config.session
       - name: Generate mutation test report
         run: |
-          cr-html keras/src/test_config.session > /path/to/output/report.html
+          cr-html keras/test_config.session > /path/to/output/report.html
       - name: Test applications with pytest
         if: ${{ steps.filter.outputs.applications == 'true' }}
         run: |
