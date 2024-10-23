@@ -54,7 +54,7 @@ jobs:
           pip install -e "." --progress-bar off --upgrade
       - name: Run mutation tests with Cosmic Ray
         run: |
-          cosmic-ray exec keras/src/test_config.toml keras/src/test_config.session
+          cosmic-ray exec ${{ github.workspace }}/keras/src/test_config.toml ${{ github.workspace }}/keras/src/test_config.session
       - name: Generate mutation test report
         run: |
           cr-html keras/src/test_config.session > /path/to/output/report.html
