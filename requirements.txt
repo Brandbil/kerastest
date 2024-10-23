@@ -11,7 +11,7 @@ torchvision>=0.16.0
 
 # Jax.
 jax[cpu]
-flax
+flaxpip install -r requirements.txt
 
 # Common deps.
 -r requirements-common.txt
