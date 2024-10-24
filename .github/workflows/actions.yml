@@ -78,7 +78,7 @@ jobs:
       #     files: apps-coverage.xml
       #     token: ${{ secrets.CODECOV_TOKEN }}
       #     fail_ci_if_error: false
-      # - name: Test integrations
+      - name: Test integrations
         if: ${{ matrix.backend != 'numpy'}}
         run: |
           python integration_tests/import_test.py
