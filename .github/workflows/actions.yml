@@ -57,12 +57,12 @@ jobs:
           cosmic-ray exec ${{ github.workspace }}/keras/test_config.toml ${{ github.workspace }}/keras/test_config.sqlite
       - name: Generate mutation test report
         run: |
-          cr-html ${{ github.workspace }}/keras/test_config.sqlite > mutation_report.html
+          cr-html ${{ github.workspace }}/keras/test_config.sqlite > ${{ matrix.backend }}.html
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mutation_report
-          path: mutation_report.html
+          name: ${{ matrix.backend }}
+          path: ${{ matrix.backend }}.html
       # - name: Test applications with pytest
       #   if: ${{ steps.filter.outputs.applications == 'true' }}
       #   run: |
