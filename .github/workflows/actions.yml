@@ -52,35 +52,33 @@ jobs:
           pip install tf_keras==2.16.0 --progress-bar off --upgrade
           pip install cosmic-ray --progress-bar off --upgrade
           pip install -e "." --progress-bar off --upgrade
-      # - name: List directory contents
-      #   run: |
-      #     ls -R ${{ github.workspace }}/keras
-      # - name: Run mutation tests with Cosmic Ray
-      #   run: |
-      #     cosmic-ray exec ${{ github.workspace }}/keras/test_config.toml ${{ github.workspace }}/keras/test_config.sqlite
-      # - name: Generate mutation test report
-      #   run: |
-      #     cr-html ${{ github.workspace }}/keras/test_config.sqlite > mutation_report.html
+      - name: Run mutation tests with Cosmic Ray
+        run: |
+          cosmic-ray exec ${{ github.workspace }}/keras/test_config.toml ${{ github.workspace }}/keras/test_config.sqlite
+      - name: Generate mutation test report
+        run: |
+          cr-html ${{ github.workspace }}/keras/test_config.sqlite > public/mutation_report.html
 
-      # - name: HTML Preview
-      #   uses: pavi2410/html-preview-action@v2
-      #   with:
-      #     html_file: 'mutation_report.html'
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
       - name: Test applications with pytest
         if: ${{ steps.filter.outputs.applications == 'true' }}
         run: |
           pytest keras/src/applications --cov=keras/src/applications
           coverage xml --include='keras/src/applications/*' -o apps-coverage.xml
-      - name: Codecov keras.applications
-        if: ${{ steps.filter.outputs.applications == 'true' }}
-        uses: codecov/codecov-action@v4
-        with:
-          env_vars: PYTHON,KERAS_HOME
-          flags: keras.applications,keras.applications-${{ matrix.backend }}
-          files: apps-coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
-      - name: Test integrations
+      # - name: Codecov keras.applications
+      #   if: ${{ steps.filter.outputs.applications == 'true' }}
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     env_vars: PYTHON,KERAS_HOME
+      #     flags: keras.applications,keras.applications-${{ matrix.backend }}
+      #     files: apps-coverage.xml
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     fail_ci_if_error: false
+      # - name: Test integrations
         if: ${{ matrix.backend != 'numpy'}}
         run: |
           python integration_tests/import_test.py
@@ -97,14 +95,14 @@ jobs:
         run: |
           pytest keras --ignore keras/src/applications --cov=keras
           coverage xml --omit='keras/src/applications/*,keras/api' -o core-coverage.xml
-      - name: Codecov keras
-        uses: codecov/codecov-action@v4
-        with:
-          env_vars: PYTHON,KERAS_HOME
-          flags: keras,keras-${{ matrix.backend }}
-          files: core-coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
+      # - name: Codecov keras
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     env_vars: PYTHON,KERAS_HOME
+      #     flags: keras,keras-${{ matrix.backend }}
+      #     files: core-coverage.xml
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     fail_ci_if_error: false
 
   format:
     name: Check the code format
