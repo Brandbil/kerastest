@@ -52,7 +52,7 @@ jobs:
           pip install tf_keras==2.16.0 --progress-bar off --upgrade
           pip install cosmic-ray --progress-bar off --upgrade
           pip install -e "." --progress-bar off --upgrade
-      - name: List directory contents
+      # - name: List directory contents
       #   run: |
       #     ls -R ${{ github.workspace }}/keras
       # - name: Run mutation tests with Cosmic Ray
